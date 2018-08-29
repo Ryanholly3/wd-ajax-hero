@@ -57,14 +57,17 @@
   };
 
   // ADD YOUR CODE HERE
-  var searchButton = document.querySelector('.btn-large waves-effect waves-light');
-  var searchTerm = document.querySelector('#search');
+  var searchButton = document.querySelector('.btn-large');
+  var searchBox = document.querySelector('#search');
 
   function searchRequest () {
     //Select the information in the searchTerm
+    var searchTerm = searchBox.innerHTML
 
     //send an API request using the search searchTerm
-
+    fetch('https://omdb-api.now.sh/?s=star%20wars')
+      .then((response) => response.json())
+      .then((data)=> console.log(data))
     //handle the API response by pushing formed movie object to movie Array
 
     //Render the movie array to the page by calling the renderMovies() function
