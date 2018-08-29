@@ -57,4 +57,19 @@
   };
 
   // ADD YOUR CODE HERE
+  var searchButton = document.querySelector('.btn-large waves-effect waves-light');
+  var searchTerm = document.querySelector('#search');
+
+  function searchRequest () {
+    //Select the information in the searchTerm
+
+    //send an API request using the search searchTerm
+
+    //handle the API response by pushing formed movie object to movie Array
+
+    //Render the movie array to the page by calling the renderMovies() function
+  }
+
+  searchButton.addEventListener('click', searchRequest);
+
 })();
