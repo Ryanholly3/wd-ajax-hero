@@ -2,8 +2,38 @@
   'use strict';
 
   const movies = [];
+  const searchForm = document.querySelector('form');
 
-  const renderMovies = function() {
+  searchForm.addEventListener('submit', searchRequest);
+
+  function searchRequest (event) {
+    event.preventDefault();
+
+    const searchBox = document.querySelector('#search');
+    const searchTerm = searchBox.value;
+    const inputURL = searchTerm.replace(/ /g, '%20');
+    const searchURL = 'https://omdb-api.now.sh/?s=' + inputURL;
+
+    fetch(searchURL)
+      .then((response) => response.json())
+      .then(function(data){
+        var currentMovie = {};
+        var searchData = data.Search;
+
+        for (var i = 0; i < searchData.length; i++) {
+          var currentMovie = {
+            id: searchData[i]['imdbID'],
+            poster: searchData[i]['Poster'],
+            title: searchData[i]['Title'],
+            year: searchData[i]['Year']
+          }
+          movies.push(currentMovie);
+        }
+        renderMovies();
+      })
+  }
+
+  function renderMovies() {
     $('#listings').empty();
 
     for (const movie of movies) {
@@ -55,24 +85,5 @@
       $('.modal-trigger').leanModal();
     }
   };
-
-  // ADD YOUR CODE HERE
-  var searchButton = document.querySelector('.btn-large');
-  var searchBox = document.querySelector('#search');
-
-  function searchRequest () {
-    //Select the information in the searchTerm
-    var searchTerm = searchBox.innerHTML
-
-    //send an API request using the search searchTerm
-    fetch('https://omdb-api.now.sh/?s=star%20wars')
-      .then((response) => response.json())
-      .then((data)=> console.log(data))
-    //handle the API response by pushing formed movie object to movie Array
-
-    //Render the movie array to the page by calling the renderMovies() function
-  }
-
-  searchButton.addEventListener('click', searchRequest);
 
 })();
